@@ -11,8 +11,12 @@ df = pd.read_excel('Gas_TTF_Day-Ahead_daily_20210110-20251006.xlsx')
 print(df)
 
 # Convert Date column to datetime
-df['Date'] = pd.to_datetime(df['Date'])
+df['Date'] = pd.to_datetime(df['Date']).dt.tz_localize('Europe/Amsterdam', ambiguous='NaT', nonexistent='NaT')
 df.rename(columns={df.columns[1]: 'price'}, inplace=True)
+
+# prices of Gas are Day-Ahead, so we need to add 36 hours to the date:
+df['Date'] = df['Date'] + pd.to_timedelta(36, unit='h')
+
 
 # Print start and end dates
 print(df.head(12))
@@ -45,7 +49,7 @@ print(f"Missing dates filled: {df_all_days.shape[0] - df.shape[0]}")
 
 
 
-df_all_days.to_csv('Gas_TTF_Day-Ahead_daily_all_days_20210104-2025106.csv', index=False)
+df_all_days.to_csv('Gas_20210104-2025106_ICE_andreas_daily.csv', index=False)
 
 
 
