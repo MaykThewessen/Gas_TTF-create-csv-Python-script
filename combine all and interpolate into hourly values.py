@@ -56,6 +56,6 @@ plt.show()
 plt.close()
 
 #%% Save to csv
-df_all.to_csv('Gas_TTF_NL_hourly_interpolated_201801010000-202510072300.csv', index=False)
+df_all.to_csv('Gas_TTF_NL_hourly_interpolated_201801010000_202510072300.csv', index=False)
 
 
