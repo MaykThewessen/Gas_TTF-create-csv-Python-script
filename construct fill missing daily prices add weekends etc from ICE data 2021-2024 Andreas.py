@@ -7,7 +7,7 @@ os.system('cls' if os.name == 'nt' else 'clear')
 
 
 
-df = pd.read_excel('Gas_TTF_Day-Ahead_daily_20210110-20251006.xlsx')
+df = pd.read_excel('Gas_TTF_Day-Ahead_daily_20210110-20251231.xlsx')
 print(df)
 
 # Convert Date column to datetime
@@ -49,7 +49,7 @@ print(f"Missing dates filled: {df_all_days.shape[0] - df.shape[0]}")
 
 
 
-df_all_days.to_csv('Gas_20210104-2025106_ICE_andreas_daily.csv', index=False)
+df_all_days.to_csv(f'Gas_20210104-20251231_daily.csv', index=False)
 
 
 

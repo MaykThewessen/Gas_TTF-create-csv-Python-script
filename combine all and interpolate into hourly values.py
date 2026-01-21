@@ -9,7 +9,7 @@ df_monthly['Date'] = pd.to_datetime(df_monthly['Date'], utc=True).dt.tz_convert(
 print(f'\ndf_monthly: \n{df_monthly}')
 
 
-df_daily = pd.read_csv('Gas_20210104-2025106_ICE_andreas_daily.csv')
+df_daily = pd.read_csv('Gas_20210104-20251231_daily.csv')
 df_daily['Date'] = pd.to_datetime(df_daily['Date'], utc=True).dt.tz_convert('Europe/Amsterdam')
 print(f'\ndf_daily: \n{df_daily}')
 
@@ -30,6 +30,8 @@ print(f'\ndate_range: \n{date_range}')
 
 df_all = pd.concat([df_monthly, df_daily], ignore_index=True)
 df_all = df_all.sort_values('Date').reset_index(drop=True)
+# Remove potential duplicate timestamps before reindexing
+df_all = df_all[~df_all['Date'].duplicated(keep='last')].copy()
 
 # Reindex df_all to hourly values and interpolate prices
 df_all = df_all.set_index('Date').reindex(date_range)
@@ -56,6 +58,6 @@ plt.show()
 plt.close()
 
 #%% Save to csv
-df_all.to_csv('Gas_TTF_NL_hourly_interpolated_201801010000_202510072300.csv', index=False)
+df_all.to_csv('Gas_TTF_NL_hourly_interpolated_201801010000_20251231.csv', index=False)
 
 
